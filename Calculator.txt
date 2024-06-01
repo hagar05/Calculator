@@ -1,0 +1,753 @@
+operations, Input
+store operation
+ADDITION, load operation
+	subt plus_sign
+        Skipcond 400
+        Jump SUBTRACTION
+        Input           
+       Store X         
+
+       Input           
+       Store Y         
+
+       Load X        
+       Add Y         
+       Store Z        
+
+       Output         
+       Halt            
+
+SUBTRACTION, load operation
+		    subt minus_sign
+            Skipcond 400
+            Jump MULTIPLY     
+           Input           
+       Store X         
+
+       Input           
+       Store Y         
+
+       Load X          
+       Subt Y           
+       Store Z         
+
+       Output          
+       Halt            
+
+MULTIPLY, Load operation
+Subt multiply_sign
+skipcond 400 
+Jump Divison
+              Clear
+Store result
+Input
+Store X
+Input
+Store Y
+
+Load Y
+Skipcond 000
+Jump nonneg
+
+Subt Y
+Subt Y
+Store Y
+Clear
+Add one
+Store negflag
+Clear
+Jump loop
+
+nonneg,  Clear
+         Store negflag
+         Load Y
+         Skipcond 400
+         Jump loop 
+         Jump halt 
+
+loop,    Load result
+         Add X
+         Store result
+
+         Load Y
+         Subt one
+         Store Y
+	
+         Skipcond 400 
+         Jump loop 
+         
+
+Load negflag
+Skipcond 800
+Jump halt
+
+Load result
+Subt result
+Subt result
+Store result
+
+
+halt,    Load result
+         Output	
+         Halt
+
+Divison, load operation
+subt div_sign 
+skipcond 400
+Jump power 
+
+ Clear   
+Input
+    Store   A
+    Clear   
+Input
+    Store   B
+    Clear   
+    Store   X
+
+Loop,   Load    A  
+    Subt    B
+    Store   A
+    Skipcond 800
+    Jump    Endloop 
+    Load    X
+    Add     one
+    Store   X
+    Jump Loop
+
+IncrementX, Load    X
+    Add     one
+    Store   X
+    Load    A
+    Subt    B
+    Store   A
+    Jump    Endloop
+
+Endloop, Load   A
+    Skipcond 000 
+    Jump    IncrementX
+
+    Load    X
+    Output   
+    Halt
+
+power, load operation 
+subt power_sign
+skipcond 400
+jump factorial
+
+INPUT
+STORE n
+STORE Counter1
+STORE Counter2
+INPUT
+STORE m
+SKIPCOND 400
+JUMP loop2
+JUMP loop1
+
+loop2, LOAD m
+SUBT ONE
+STORE m
+SKIPCOND 400
+JUMP loop3
+JUMP loop4
+
+loop1, LOAD one
+OUTPUT
+HALT
+
+loop3, LOAD PRODUCT
+ADD n
+STORE PRODUCT
+LOAD Counter1
+SUBT ONE
+STORE Counter1
+SKIPCOND 400
+JUMP loop3
+JUMP loop5
+
+loop4, LOAD n
+OUTPUT
+HALT
+
+loop5, LOAD m
+SUBT ONE
+STORE m
+SKIPCOND 400
+JUMP loop6
+JUMP loop7
+
+loop6, LOAD PRODUCT
+STORE n
+LOAD a
+STORE PRODUCT
+LOAD Counter2
+STORE Counter1
+JUMP loop3
+
+loop7, LOAD PRODUCT
+OUTPUT
+Halt
+
+factorial, load operation
+subt fact_sign
+skipcond 400
+jump max
+CLEAR
+INPUT 
+STORE A
+LOAD A
+SUBT ONE
+STORE X
+SKIPCOND 400
+JUMP LOOP1
+JUMP LOOP2
+
+LOOP2, LOAD A
+OUTPUT
+HALT
+
+LOOP1, LOAD X
+SKIPCOND 000
+JUMP IF
+JUMP LOOP2
+
+IF, LOAD A
+SUBT ONE
+STORE B
+LOAD ZERO
+ADD B
+STORE Y
+SKIPCOND 400
+JUMP TO1
+JUMP TO2
+
+TO2, LOAD ANSWER
+OUTPUT
+HALT
+
+TO1, LOAD A
+ADD PRODUCT
+STORE PRODUCT
+LOAD PRODUCT
+ADD ZERO
+STORE ANSWER
+LOAD B
+SUBT ONE
+STORE B
+SKIPCOND 400
+JUMP TO1
+JUMP TO3
+
+TO3, LOAD PRODUCT
+SUBT PRODUCT
+STORE PRODUCT
+LOAD ANSWER
+ADD ZERO   
+STORE A
+JUMP LAST
+
+
+LAST, LOAD Y
+SUBT ONE
+STORE B
+LOAD ZERO
+ADD B
+STORE Y
+SKIPCOND 400
+JUMP TO1
+JUMP TO2
+
+
+max, load operation
+subt M
+skipcond 400
+jump triangle
+
+LOOP, LOAD X
+    SUBT FIVE
+    SKIPCOND 000   
+    JUMP Loop2     
+
+    CLEAR           
+    INPUT
+    STORE TEMP
+    CLEAR
+if, LOAD X
+    SUBT 1
+    SKIPCOND 800
+    JUMP STOREFIRST
+
+    CLEAR
+    LOAD TEMP
+    SUBT MIN
+    SKIPCOND 000
+    JUMP FINDMAX
+
+else, SKIPCOND 800
+    JUMP FINDMIN
+
+    CONTINUE, CLEAR
+    LOAD TEMP
+    ADD Y           
+    STORE Y         
+    CLEAR
+    LOAD X         
+    ADD ONE
+    STORE X
+    CLEAR
+    JUMP LOOP       
+
+    FINDMAX, CLEAR
+    LOAD TEMP
+    STORE MAX
+CLEAR
+    JUMP CONTINUE
+
+    FINDMIN, CLEAR
+    LOAD TEMP
+    STORE MIN
+    JUMP CONTINUE
+
+STOREFIRST, LOAD TEMP
+    STORE MIN
+    STORE MAX
+    JUMP CONTINUE
+Loop2, LOAD Y    
+    SKIPCOND 800     
+    JUMP PRINT       
+
+    SUBT FIVE         
+    STORE Y          
+    CLEAR
+    LOAD AVERAGE     
+    ADD ONE
+    STORE AVERAGE
+    CLEAR
+    JUMP Loop2
+
+PRINT, LOAD AVERAGE
+    OUTPUT
+    CLEAR
+    LOAD MAX
+    OUTPUT
+    CLEAR
+    LOAD MIN
+    OUTPUT
+    CLEAR
+    HALT
+
+triangle, load operation
+subt triangled
+skipcond 400
+jump sin
+input
+store Side1
+input
+store Side2
+input
+store Side3
+
+load Side1
+add Side2
+subt Side3
+skipcond 800
+jump notTriangle
+
+load Side2
+add Side3
+subt Side1
+skipcond 800
+jump notTriangle
+
+load Side3
+add Side1
+Subt Side2
+skipcond 800
+jump notTriangle
+
+
+jump printTriangle
+
+notTriangle, clear
+ load const_0
+output        
+halt
+
+printTriangle, clear
+ load const_1
+output        
+halt
+
+sin, load operation
+subt S
+skipcond 400
+jump cos
+
+Input Theta    
+Store Theta    
+
+Load Theta     
+subt 90     
+Skipcond 400   
+Jump SineIsOne 
+
+Load Theta     
+Store Result   
+
+Load Theta     
+Subt 180       
+Store Temp     
+
+Load Theta     
+Subt Temp      
+Store Temp2    
+Load Temp2     
+Clear Result   
+OuterLoop, Skipcond 000 
+Jump EndOuterLoop        
+InnerLoop, Load Result  
+Add Theta               
+Store Result            
+Subt One                
+Jump OuterLoop          
+
+EndOuterLoop, Store Result 
+
+Load 180       
+Subt Theta     
+Store Temp     
+CLEAR
+Load Result    
+Clear Temp2    
+OuterLoop2, Skipcond 000 
+Jump EndOuterLoop2       
+
+InnerLoop2, Load Temp2   
+Add Result              
+Store Temp2             
+Subt One                
+Jump OuterLoop2         
+
+EndOuterLoop2, Store Result   
+
+Load Result    
+Add Result     
+Store Result   
+
+Load Theta     
+Clear Temp     
+OuterLoop3, Skipcond 000 
+Jump EndOuterLoop3       
+
+InnerLoop3, Load Temp   
+Add Theta               
+Store Temp               
+Subt One                
+Jump OuterLoop3         
+
+EndOuterLoop3, Store Temp 
+
+Load Const_40500     
+Store Dividend  
+
+Clear AC       
+Load Theta     
+Store Divisor  
+Clear Result  
+DivLoop, Load Divisor   
+Subt One               
+Store Divisor          
+Skipcond 400           
+Jump DivLoopEnd         
+Load Dividend          
+Add Result             
+Store Result            
+Jump DivLoop           
+
+DivLoopEnd, CLEAR
+Load Result 
+Store Sine 
+
+Output Sine   
+
+Halt            
+
+SineIsOne, Load One     
+Store Sine             
+Jump OutputSine        
+
+OutputSine, Output Sine    
+Halt            
+
+cos, load operation
+subt C
+Skipcond 400
+jump tan
+INPUT cosTheta       
+STORE cosTheta       
+
+Load cosTheta        
+Skipcond 400      
+Jump cosinezero   
+Load cosTheta        
+Skipcond 000      
+Jump cosineone   
+
+Load One1          
+Store Cosine      
+OutputCosine, Output Cosine 
+Jump COSDONE         
+
+NotZero, Subt 90  
+Store cosTemp       
+
+Load cosTheta        
+Subt cosTemp        
+Store cosTemp2      
+
+Load cosTemp2        
+Clear cosResult     
+outerloop, Skipcond 000 
+Jump endouterloop       
+
+innerloop, Load cosResult  
+Add cosTheta               
+Store cosResult            
+Subt One1                 
+Jump outerloop           
+
+endouterloop, Store cosResult 
+
+Load 90           
+Subt cosTheta        
+Store cosTemp        
+
+Load cosResult      
+Clear cosTemp2       
+outerloop2, Skipcond 000 
+Jump endouterloop2       
+
+innerloop2, Load Temp2   
+Add cosResult               
+Store cosTemp2             
+Subt One1                
+Jump outerloop2           
+
+endouterloop2, Store cosResult   
+
+Load cosResult      
+Add cosResult       
+Store cosResult     
+
+Load cosTheta        
+Clear cosTemp        
+outerloop3, Skipcond 000 
+Jump endouterloop3       
+
+innerloop3, Load cosTemp    
+Add cosTheta               
+Store cosTemp               
+Subt One1                
+Jump outerloop3           
+
+endouterloop3, Store cosTemp 
+
+Load Const_40500     
+Store Dividend        
+Clear AC              
+Load cosTheta           
+Store Divisor         
+Clear cosResult         
+divloop, Load Divisor   
+Subt One1               
+Store Divisor          
+Skipcond 400          
+Jump divloopend        
+Load Dividend          
+Add cosResult            
+Store cosResult          
+Jump divloop           
+
+divloopend, Load cosResult 
+Store Cosine   
+          
+
+outputCosine, output cosine 
+halt
+
+cosineone, Load One   
+Store Cosine           
+Jump OutputCosine     
+
+cosinezero, Load Zero  
+Store Cosine           
+Jump OutputCosine       
+
+COSDONE, halt
+tan, load operation
+subt T
+skipcond 400
+jump primemethod
+INPUT Input_angle
+
+LOAD Input_angle              
+SKIPCOND 800                   
+JUMP positive_input           
+LOAD UNIT_VALUE                
+OUTPUT
+HALT
+
+positive_input, LOAD Input_angle  
+SUBT threesixty                  
+SKIPCOND 800                    
+JUMP output_zero                   
+LOAD Input_angle                  
+SUBT fortyfive                           
+SKIPCOND 400                     
+JUMP output_one                  
+
+output_one, LOAD UNIT_VALUE
+OUTPUT
+HALT
+
+output_zero, LOAD UNIT_VALUE
+SUBT UNIT_VALUE
+OUTPUT
+HALT
+primemethod, 		Jns Inputmethod1 
+                    load two
+                    store i
+                    load num1
+                    subt one
+                    store u
+
+loopprime, 				load i
+                    store i1
+                    load num1 
+                    store temp
+                    jump div
+
+check1, 			load Reminder
+                    skipcond 400
+                    jump next
+                    jump notprime
+
+next,				load i
+                    add one
+                    store i
+                    load i
+                    subt u
+                    Skipcond 000
+                    jump prime
+                    jump loopprime
+
+div,				load temp
+                    subt i1
+                    skipcond 000
+                    jump add1
+                    jump divout
+
+add1, 				store temp 
+                    load Q
+                    add one 
+                    store Q
+                    jump div
+
+divout,				load temp
+                    store Reminder
+                    jump check1
+
+notprime, 			load zero
+                    output
+                    jump DONE
+
+prime,				load one 
+                    output
+                    jump DONE
+
+Inputmethod1, 		hex 0
+                    Input
+                    store num1
+                    JumpI Inputmethod1
+ DONE, Halt
+
+num1, DEC 0
+i, DEC 0
+two, DEC 2
+one, DEC 1
+i1, DEC 0
+u, DEC 0
+temp, DEC 0
+Reminder, DEC 0
+Q, DEC 0
+zero, DEC 0
+HALT
+
+threesixty, DEC 360
+fortyfive, DEC 45
+positive_angle, DEC 0
+UNIT_VALUE, DEC 1
+Input_angle, DEC 0
+
+
+// variables decleared//
+cosTheta, DEC 0   
+cosTemp, DEC 0    
+cosTemp2, DEC 0   
+cosResult, DEC 0  
+Cosine, DEC 0   
+Const_40500, DEC 40500 
+One1, DEC 1
+Zero, DEC 0
+
+FIVE, DEC 5
+MIN, DEC 0       
+MAX, DEC 0
+TEMP, DEC 0
+AVERAGE, DEC 0    
+ANSWER, DEC 0
+ZERO, DEC 0
+ONE, DEC 1
+
+A,  DEC     0
+B,  DEC     0
+X, DEC 0
+Y, DEC 0
+
+Z,     Dec     0
+negflag, DEC 0
+result, DEC 0
+operation, DEC 0
+plus_sign,   HEX 002B
+minus_sign,  HEX 002D
+multiply_sign, HEX 002A
+div_sign, HEX 002F
+power_sign, HEX 005E
+fact_sign, HEX  0021
+n, DEC 0
+m, DEC 0
+Counter1, DEC 0
+Counter2, DEC 0
+PRODUCT, DEC 0
+M, HEX 004D
+a, DEC 0
+triangled, HEX 0044
+const_0, dec 0
+const_1, dec 1
+Side1, DEC 0
+Side2, DEC 0
+Side3, DEC 0
+S, HEX 0053
+Theta, DEC 0   
+Temp, DEC 0    
+Temp2, DEC 0   
+Result, DEC 0  
+Dividend, DEC 0 
+Sine, DEC 0    
+One, DEC 1     
+Divisor, DEC 1
+C, HEX 0043
+T, HEX 0054
+P, HEX 0050
